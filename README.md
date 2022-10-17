@@ -1,3 +1,3 @@
 # Authorisation site
 
-https://krasnobokydima.github.io/Authorisation/login
+https://krasnobokydima.github.io/authorisation/login
