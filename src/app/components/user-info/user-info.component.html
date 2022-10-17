@@ -1,0 +1,18 @@
+<div *ngIf="store.user$$.value; else loader">
+  <div class="row">
+    <p>User name:</p>
+    <h2>{{ store.user$$.value.first_name }}</h2>
+  </div>
+  <div class="row">
+    <p>User last name:</p>
+    <h2>{{ store.user$$.value.last_name }}</h2>
+  </div>
+  <div class="row">
+    <p>User role:</p>
+    <h2>{{ store.user$$.value.role }}</h2>
+  </div>
+</div>
+
+<ng-template #loader>
+  <mat-spinner></mat-spinner>
+</ng-template>

@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 5px 0;
+  padding: 5px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.5);
+}
+
+.info {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+
+.table {
+  width: 100%;
+}

@@ -1,0 +1,11 @@
+<ng-container *ngIf="store.reports$$.value as reports; else loader">
+  <div *ngFor="let report of reports" class="container">
+    <h3>{{ report.name }}</h3>
+    <p>Active: {{ report.active ? "TRUE" : "FALSE" }}</p>
+    <img [src]="report.image_url" alt="image" class="image" />
+  </div>
+</ng-container>
+
+<ng-template #loader>
+  <mat-spinner></mat-spinner>
+</ng-template>

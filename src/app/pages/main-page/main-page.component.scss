@@ -1,0 +1,41 @@
+.container {
+  background-color: rgba(240, 128, 128, 0.2);
+  height: 100vh;
+}
+
+.icon {
+  margin-right: 3px;
+}
+
+.logo {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  &:active {
+    color: rgba(255, 255, 255, 1);
+  }
+}
+
+.main-container {
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  min-height: 70vh;
+
+  background-color: white;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}
