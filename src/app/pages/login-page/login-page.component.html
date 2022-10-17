@@ -1,0 +1,32 @@
+<div class="container">
+  <mat-toolbar color="warn" class="toolbar">
+    <a routerLink="/" class="logo">My Heroku App</a>
+  </mat-toolbar>
+  <form class="form-container" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Login in system</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your email</mat-label>
+      <input
+        matInput
+        type="email"
+        placeholder="pat@example.com"
+        [formControl]="email"
+      />
+      <mat-icon matPrefix class="icon">email</mat-icon>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your password</mat-label>
+      <input matInput type="password" [formControl]="password" />
+      <mat-icon matPrefix class="icon">lock</mat-icon>
+      <mat-error *ngIf="password.invalid">You must enter a password</mat-error>
+    </mat-form-field>
+    <button
+      type="submit"
+      mat-flat-button
+      color="warn"
+      [disabled]="form.invalid"
+    >
+      LOGIN
+    </button>
+  </form>
+</div>

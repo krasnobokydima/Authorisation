@@ -1,0 +1,22 @@
+<div class="container">
+  <mat-toolbar color="warn" class="toolbar">
+    <a routerLink="/" class="logo">My Heroku App</a>
+    <span class="material-icons logo" (click)="logout()">logout</span>
+  </mat-toolbar>
+  <div class="main-container">
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="User information">
+        <app-user-info></app-user-info>
+      </mat-tab>
+      <mat-tab label="Dashboard">
+        <app-dashboard></app-dashboard>
+      </mat-tab>
+      <mat-tab label="Chart">
+        <app-graph></app-graph>
+      </mat-tab>
+      <mat-tab *ngIf="store.user$$.value && store.user$$.value.role === 'Admin'" label="Users list">
+        <app-users></app-users>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

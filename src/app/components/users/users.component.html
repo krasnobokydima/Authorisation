@@ -1,0 +1,24 @@
+<div *ngIf="store.users$$.value as users; else loader">
+  <div *ngFor="let user of users" class="container">
+    <div class="info">
+      <h3 class="name">
+        {{ user.first_name }}
+      </h3>
+      <p class="last-name">{{ user.last_name }}</p>
+      <a href="mailto:{{ user.email }}" class="email">{{ user.email }}</a>
+
+    </div>
+    <ul *ngIf="user.groups.length > 0; else empty" class="groups">
+      <h3>User groups: </h3>
+      <li *ngFor="let group of user.groups" class="group">{{ group }}</li>
+    </ul>
+
+    <ng-template #empty>
+      <p>User haven`t groups</p>
+    </ng-template>
+  </div>
+</div>
+
+<ng-template #loader>
+  <mat-spinner></mat-spinner>
+</ng-template>
