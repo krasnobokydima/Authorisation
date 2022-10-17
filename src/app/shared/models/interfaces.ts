@@ -35,4 +35,5 @@ export interface IUser {
   first_name: string;
   groups: string[];
   last_name: string;
+  position?: number;
 }

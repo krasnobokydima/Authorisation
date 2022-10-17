@@ -1,4 +1,3 @@
-/* eslint-disable comma-dangle */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, take, tap } from 'rxjs';
@@ -41,8 +40,15 @@ export class HttpService {
   }
 
   getUsers(): Observable<IUser[]> {
-    return this.http
-      .get<IUser[]>(`${this.URL}users`)
-      .pipe(tap((users) => this.store.setUsers(users)));
+    return this.http.get<IUser[]>(`${this.URL}users`).pipe(
+      tap((users) => {
+        const newUsers = users.map((user, index) => ({
+          ...user,
+          position: index + 1,
+        }));
+
+        this.store.setUsers(newUsers);
+      })
+    );
   }
 }
