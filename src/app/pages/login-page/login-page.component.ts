@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { takeWhile, tap } from 'rxjs';
 import { IAuthState } from 'src/app/shared/models/interfaces';
 import { setLogin } from 'src/app/shared/store/actions';
-import { AuthSelectors } from 'src/app/shared/store/selectors';
 
 @Component({
   selector: 'app-login-page',
@@ -23,15 +20,9 @@ export class LoginPageComponent {
     password: this.password,
   });
 
-  constructor(private router: Router, private store: Store<IAuthState>) {}
+  constructor(private store: Store<IAuthState>) {}
 
   onSubmit() {
-    this.store.dispatch(setLogin(this.form.value));
-    this.store
-      .select(AuthSelectors.getCurrentUser)
-      .pipe(
-        tap(() => this.router.navigate(['../'])),
-        takeWhile((user) => !!user.token)
-      ).subscribe();
+    this.store.dispatch(setLogin({ form: this.form.value }));
   }
 }

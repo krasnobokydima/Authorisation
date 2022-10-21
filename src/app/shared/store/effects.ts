@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Router } from '@angular/router';
+
 import { AuthService } from '../services/auth.service';
 import { HttpService } from '../services/http.service';
 import {
@@ -24,13 +26,11 @@ import {
   mergeMap,
   of,
   reduce,
-  tap,
   withLatestFrom,
 } from 'rxjs';
 import { IAuthState, IPreparedChart } from '../models/interfaces';
 import { Store } from '@ngrx/store';
 import { AuthSelectors } from './selectors';
-import { ChartData } from 'chart.js';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +40,7 @@ export class AuthorisationEffects {
     private actions: Actions,
     private auth: AuthService,
     private http: HttpService,
+    private router: Router,
     private store: Store<IAuthState>
   ) {}
 
@@ -71,11 +72,12 @@ export class AuthorisationEffects {
   loginUser$ = createEffect(() =>
     this.actions.pipe(
       ofType(setLogin),
-      tap(console.log),
-      exhaustMap(({ email, password }) =>
+      exhaustMap(({ form: { email, password } }) =>
         this.auth.login({ email, password }).pipe(
           map((currentUser) => {
             this.auth.setToken(currentUser.token);
+            this.router.navigate(['../']);
+  
             return setLoginSuccess({ currentUser });
           }),
           catchError(() => of(setLoginFail()))
