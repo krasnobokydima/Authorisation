@@ -2,18 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { ILoginForm, ICurrentUser } from '../models/interfaces';
-import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  public token: string | null = null;
+  private URL = 'http://ds-test-api.herokuapp.com/api/';
+  private token: string | null = null;
 
-  constructor(
-    private http: HttpClient,
-    private httpService: HttpService,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   getToken() {
     return this.token;
@@ -24,12 +21,11 @@ export class AuthService {
   }
 
   login(params: ILoginForm): Observable<ICurrentUser> {
-    return this.http.post<ICurrentUser>(`${this.httpService.URL}login`, params).pipe(
+    return this.http.post<ICurrentUser>(`${this.URL}login`, params).pipe(
       tap((user: ICurrentUser) => {
         localStorage.setItem('auth-token', user.token);
         localStorage.setItem('role', JSON.stringify(user.role));
         localStorage.setItem('user', JSON.stringify(user));
-        this.setToken(user.token);
       })
     );
   }

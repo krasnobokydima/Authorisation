@@ -1,54 +1,27 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, take, tap } from 'rxjs';
-import { IGraph, IReport, IUser } from '../models/interfaces';
-import { StoreService } from './store.service';
+import { Observable } from 'rxjs';
+import { IChart, IReport, IUser } from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpService {
-  public URL = 'http://ds-test-api.herokuapp.com/api/';
+  private URL = 'http://ds-test-api.herokuapp.com/api/';
 
-  constructor(private http: HttpClient, private store: StoreService) {}
+  constructor(private http: HttpClient) {}
 
   getReports(): Observable<IReport[]> {
-    return this.http.get<IReport[]>(`${this.URL}userassessments`).pipe(
-      tap((reports) => {
-        this.store.setReports(reports);
-        reports.forEach(({ id, name }) => {
-          this.getChart(id)
-            .pipe(take(1))
-            .subscribe(({ data }) => {
-              const currentChart = {
-                name,
-                chartKeys: Object.keys(data),
-                chartValues: Object.values(data),
-              };
-
-              this.store.setGraphs(currentChart);
-            });
-        });
-      })
-    );
+    return this.http.get<IReport[]>(`${this.URL}userassessments`);
   }
 
-  getChart(id: number): Observable<IGraph> {
+  getChart(id: number): Observable<IChart> {
     const params = new HttpParams().set('id', id);
 
-    return this.http.get<IGraph>(`${this.URL}userassessment/graph`, { params });
+    return this.http.get<IChart>(`${this.URL}userassessment/graph`, { params });
   }
 
   getUsers(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(`${this.URL}users`).pipe(
-      tap((users) => {
-        const newUsers = users.map((user, index) => ({
-          ...user,
-          position: index + 1,
-        }));
-
-        this.store.setUsers(newUsers);
-      })
-    );
+    return this.http.get<IUser[]>(`${this.URL}users`);
   }
 }

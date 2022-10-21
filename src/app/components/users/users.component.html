@@ -1,24 +1,4 @@
-<!-- <div *ngIf="store.users$$.value as users; else loader">
-  <div *ngFor="let user of users" class="container">
-    <div class="info">
-      <h3 class="name">
-        {{ user.first_name }}
-      </h3>
-      <p class="last-name">{{ user.last_name }}</p>
-      <a href="mailto:{{ user.email }}" class="email">{{ user.email }}</a>
-
-    </div>
-    <ul *ngIf="user.groups.length > 0; else empty" class="groups">
-      <h3>User groups: </h3>
-      <li *ngFor="let group of user.groups" class="group">{{ group }}</li>
-    </ul>
-
-    <ng-template #empty>
-      <p>User haven`t groups</p>
-    </ng-template>
-  </div>
-</div> -->
-<ng-container *ngIf="store.users$$.value as users; else loader">
+<ng-container *ngIf="users$ as users; else loader">
   <table mat-table [dataSource]="users" class="table">
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef>No.</th>
@@ -54,7 +34,13 @@
     <tr mat-header-row *matHeaderRowDef="tableHeaders"></tr>
     <tr mat-row *matRowDef="let row; columns: tableHeaders"></tr>
   </table>
-  <button mat-raised-button color="primary" (click)="onDownloadFile()" [disabled]="!selectedUsers.length">
+  <button
+    mat-raised-button
+    color="primary"
+    class="button"
+    (click)="onDownloadFile()"
+    [disabled]="!selectedUsers.length"
+  >
     Download
   </button>
 </ng-container>

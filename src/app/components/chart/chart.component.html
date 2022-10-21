@@ -1,0 +1,9 @@
+<ng-container *ngIf="charts.length; else loader">
+  <div class="container" *ngFor="let chart of charts">
+    <canvas baseChart [data]="chart" type="bar"></canvas>
+  </div>
+</ng-container>
+
+<ng-template #loader>
+  <mat-spinner></mat-spinner>
+</ng-template>

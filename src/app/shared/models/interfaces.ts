@@ -1,3 +1,4 @@
+
 export interface ICurrentUser {
   first_name: string;
   last_name: string;
@@ -5,7 +6,7 @@ export interface ICurrentUser {
   token: string;
 }
 
-export interface IGraph {
+export interface IChart {
   data: {
     [key: string]: number;
   };
@@ -17,12 +18,15 @@ export interface ILoginForm {
   password: string;
 }
 
-export interface IPreparedGraph {
-  name: string;
-  chartKeys: string[];
-  chartValues: number[];
+interface IChartData {
+  data: number[];
+  label: string;
 }
 
+export interface IPreparedChart {
+  labels: string[];
+  datasets: IChartData[];
+}
 export interface IReport {
   id: number;
   name: string;
@@ -36,4 +40,12 @@ export interface IUser {
   groups: string[];
   last_name: string;
   position?: number;
+}
+
+export interface IAuthState {
+  currentUser: Partial<ICurrentUser>;
+  users: IUser[];
+  reports: IReport[],
+  charts: IPreparedChart[];
+  error?: string;
 }

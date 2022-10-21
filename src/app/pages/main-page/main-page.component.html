@@ -14,9 +14,11 @@
       <mat-tab label="Chart">
         <app-graph></app-graph>
       </mat-tab>
-      <mat-tab *ngIf="store.user$$.value && store.user$$.value.role === 'Admin'" label="Users list">
-        <app-users></app-users>
-      </mat-tab>
+      <ng-container *ngIf="user$ | async as user">
+        <mat-tab *ngIf="user.role === 'Admin'" label="Users list">
+          <app-users></app-users>
+        </mat-tab>
+      </ng-container>
     </mat-tab-group>
   </div>
 </div>

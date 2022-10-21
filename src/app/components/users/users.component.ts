@@ -1,20 +1,30 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { take } from 'rxjs';
-import { IUser } from 'src/app/shared/models/interfaces';
-import { HttpService } from 'src/app/shared/services/http.service';
-import { StoreService } from 'src/app/shared/services/store.service';
-
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
+
+import { IAuthState, IUser } from 'src/app/shared/models/interfaces';
+import { tableHeaders } from '../../constants/store';
+import { setUsers } from 'src/app/shared/store/actions';
+import { AuthSelectors } from 'src/app/shared/store/selectors';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  tableHeaders = ['position', 'Name', 'Last name', 'Email', 'Select'];
+  users$ = this.store.select(AuthSelectors.getUsers);
+  tableHeaders = tableHeaders;
   selectedUsers: IUser[] = [];
 
-  constructor(private http: HttpService, public store: StoreService) {}
+  constructor(public store: Store<IAuthState>) {}
+
+  ngOnInit(): void {
+    this.store.dispatch(setUsers())
+  }
+
+  onDownloadFile() {
+    new AngularCsv(this.selectedUsers, 'Users')
+  }
 
   onSelecttUser(user: IUser) {
     const isUserSelect = this.selectedUsers.find(
@@ -28,13 +38,5 @@ export class UsersComponent implements OnInit {
     } else {
       this.selectedUsers.push(user);
     }
-  }
-
-  onDownloadFile() {
-    new AngularCsv(this.selectedUsers, 'Users')
-  }
-
-  ngOnInit(): void {
-    this.http.getUsers().pipe(take(1)).subscribe();
   }
 }

@@ -1,4 +1,4 @@
-<ng-container *ngIf="store.reports$$.value as reports; else loader">
+<ng-container *ngIf="(reports$ | async) as reports; else loader">
   <div *ngFor="let report of reports" class="container">
     <h3>{{ report.name }}</h3>
     <p>Active: {{ report.active ? "TRUE" : "FALSE" }}</p>

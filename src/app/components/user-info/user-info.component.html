@@ -1,15 +1,15 @@
-<div *ngIf="store.user$$.value; else loader">
+<div *ngIf="user$ | async as user; else loader">
   <div class="row">
     <p>User name:</p>
-    <h2>{{ store.user$$.value.first_name }}</h2>
+    <h2>{{ user.first_name }}</h2>
   </div>
   <div class="row">
     <p>User last name:</p>
-    <h2>{{ store.user$$.value.last_name }}</h2>
+    <h2>{{ user.last_name }}</h2>
   </div>
   <div class="row">
     <p>User role:</p>
-    <h2>{{ store.user$$.value.role }}</h2>
+    <h2>{{ user.role }}</h2>
   </div>
 </div>
 
